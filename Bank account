@@ -1,0 +1,49 @@
+#include <iostream>
+using namespace std;
+
+class BankAccount {
+private:
+    double balance;
+
+public:
+    // Constructor to initialize balance
+    BankAccount(double initial_balance) {
+        balance = initial_balance;
+    }
+
+    // Declaring AccountManager as a friend class
+    friend class AccountManager;
+};
+
+class AccountManager {
+public:
+    void displayBalance(BankAccount &acc) {
+        cout << "Current Balance: " << acc.balance << endl;
+    }
+
+    void addMoney(BankAccount &acc, double amount) {
+        acc.balance += amount;
+        cout << "Added: " << amount << endl;
+    }
+
+    void deductMoney(BankAccount &acc, double amount) {
+        if (amount <= acc.balance) {
+            acc.balance -= amount;
+            cout << "Deducted: " << amount << endl;
+        } else {
+            cout << "Insufficient funds!" << endl;
+        }
+    }
+};
+
+int main() {
+    BankAccount myAccount(5000.0);
+    AccountManager manager;
+
+    manager.displayBalance(myAccount);
+    manager.addMoney(myAccount, 1500.0);
+    manager.deductMoney(myAccount, 1000.0);
+    manager.displayBalance(myAccount);
+
+    return 0;
+}

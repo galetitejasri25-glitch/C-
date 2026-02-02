@@ -1,0 +1,53 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Employee {
+protected:
+    int empId;
+    string name;
+    double basicSalary;
+
+public:
+    void getEmployeeDetails() {
+        cout << "Enter Employee ID: "; cin >> empId;
+        cout << "Enter Name: "; cin.ignore(); getline(cin, name);
+        cout << "Enter Basic Salary: "; cin >> basicSalary;
+    }
+
+    double calculateSalary() {
+        return basicSalary;
+    }
+
+    void displayEmployeeDetails() {
+        cout << "\nEmployee Details\nID: " << empId << "\nName: " << name;
+        cout << "\nBasic Salary: " << basicSalary << endl;
+    }
+};
+
+class Manager : public Employee {
+private:
+    double allowance;
+
+public:
+    void getManagerDetails() {
+        getEmployeeDetails(); // Reusing base class function
+        cout << "Enter Manager Allowance: "; cin >> allowance;
+    }
+
+    double calculateSalary() {
+        return basicSalary + allowance;
+    }
+
+    void displayManagerDetails() {
+        displayEmployeeDetails();
+        cout << "Total Salary: " << calculateSalary() << endl;
+    }
+};
+
+int main() {
+    Manager m;
+    m.getManagerDetails();
+    m.displayManagerDetails();
+    return 0;
+}

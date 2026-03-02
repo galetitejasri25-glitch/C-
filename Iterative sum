@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+
+int calculateTotalSum(int arr[], int n) {
+    int total = 0; // Initialize sum to zero
+
+    // Iterate through each element of the array
+    for (int i = 0; i < n; i++) {
+        total += arr[i]; // Add current element to total
+    }
+
+    return total;
+}
+
+int main() {
+    int arr[] = {15, 25, 10, 30, 20};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    cout << "Array elements: ";
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+
+    // Call the iterative function
+    int sum = calculateTotalSum(arr, n);
+
+    cout << "\n\nTotal Sum of array elements: " << sum << endl;
+
+    return 0;
+}

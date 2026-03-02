@@ -1,0 +1,46 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+};
+
+// Function to multiply each node's data by 2
+void multiplyByTwo(Node* head) {
+    Node* temp = head; // Start at the beginning
+
+    while (temp != NULL) {
+        temp->data = temp->data * 2; // Multiply current value by 2
+        temp = temp->next;           // Move to the next node
+    }
+}
+
+// Simple display function to see the results
+void display(Node* head) {
+    Node* temp = head;
+    while (temp != NULL) {
+        cout << temp->data << " -> ";
+        temp = temp->next;
+    }
+    cout << "NULL" << endl;
+}
+
+int main() {
+    // Manually creating a small list: 5 -> 10 -> NULL
+    Node* head = new Node();
+    head->data = 5;
+    head->next = new Node();
+    head->next->data = 10;
+    head->next->next = NULL;
+
+    cout << "Before multiplying: ";
+    display(head);
+
+    multiplyByTwo(head);
+
+    cout << "After multiplying by 2: ";
+    display(head);
+
+    return 0;
+}

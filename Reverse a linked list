@@ -1,0 +1,62 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+};
+
+// Function to reverse the linked list
+void reverseList(Node** head) {
+    Node* prev = NULL;
+    Node* curr = *head;
+    Node* next = NULL;
+
+    while (curr != NULL) {
+        // 1. Save the next node (so we don't lose the rest of the list)
+        next = curr->next;
+
+        // 2. Flip the pointer! (current now points backwards)
+        curr->next = prev;
+
+        // 3. Move the pointers forward for the next step
+        prev = curr;
+        curr = next;
+    }
+    // 4. Update the head to the new front of the list
+    *head = prev;
+}
+
+// Helper functions
+void insert(Node** head, int val) {
+    Node* newNode = new Node();
+    newNode->data = val;
+    newNode->next = *head;
+    *head = newNode;
+}
+
+void display(Node* node) {
+    while (node != NULL) {
+        cout << node->data << " -> ";
+        node = node->next;
+    }
+    cout << "NULL" << endl;
+}
+
+int main() {
+    Node* head = NULL;
+    insert(&head, 40);
+    insert(&head, 30);
+    insert(&head, 20);
+    insert(&head, 10);
+
+    cout << "Original List: ";
+    display(head);
+
+    reverseList(&head);
+
+    cout << "Reversed List: ";
+    display(head);
+
+    return 0;
+}

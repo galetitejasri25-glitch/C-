@@ -1,0 +1,46 @@
+#include <iostream>
+
+struct Node {
+    int data;
+    Node* next;
+    Node(int val) : data(val), next(nullptr) {}
+};
+
+Node* deleteElement(Node* head, int target) {
+    // Case 1: List is empty
+    if (head == nullptr) return nullptr;
+
+    // Case 2: The node to delete is the Head
+    if (head->data == target) {
+        Node* temp = head;     // Save the old head
+        head = head->next;     // Move head to the next node
+        delete temp;           // Free the memory
+        return head;
+    }
+
+    // Case 3: The node is somewhere in the middle or at the end
+    Node* curr = head;
+    while (curr->next != nullptr && curr->next->data != target) {
+        curr = curr->next;
+    }
+
+    // If we found the element (curr->next is the target)
+    if (curr->next != nullptr) {
+        Node* nodeToDelete = curr->next;
+        curr->next = curr->next->next; // Bypass the target node
+        delete nodeToDelete;           // Free the memory
+    } else {
+        std::cout << "Element " << target << " not found." << std::endl;
+    }
+
+    return head;
+}
+
+// Helper to print the list
+void printList(Node* head) {
+    while (head) {
+        std::cout << head->data << " -> ";
+        head = head->next;
+    }
+    std::cout << "NULL" << std::endl;
+}

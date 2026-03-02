@@ -1,0 +1,16 @@
+#include <iostream>
+using namespace std;
+
+// Define the Node structure
+struct Node {
+    int data;
+    Node* next;
+};
+
+// Q1: Function to insert at the beginning
+void insertAtBeginning(Node** head, int newData) {
+    Node* newNode = new Node();
+    newNode->data = newData;
+    newNode->next = *head; // Point new node to current head
+    *head = newNode;       // Move head to the new node
+}

@@ -1,0 +1,53 @@
+#include <iostream>
+
+struct Node {
+    int data;
+    Node* next;
+    Node(int val) : data(val), next(nullptr) {}
+};
+
+// Function to reverse the second half of the list
+Node* reverseSecondHalf(Node* head) {
+    if (head == nullptr || head->next == nullptr) {
+        return head;
+    }
+
+    // Step 1: Find the middle using slow and fast pointers
+    Node *slow = head, *fast = head;
+    Node* prevSlow = nullptr;
+
+    while (fast != nullptr && fast->next != nullptr) {
+        prevSlow = slow;
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    // 'slow' is now at the start of the second half
+    // Step 2: Reverse the second half starting from 'slow'
+    Node* prev = nullptr;
+    Node* curr = slow;
+    Node* nextNode = nullptr;
+
+    while (curr != nullptr) {
+        nextNode = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = nextNode;
+    }
+
+    // Step 3: Connect the first half to the new head of the reversed second half
+    if (prevSlow != nullptr) {
+        prevSlow->next = prev;
+    }
+
+    return head;
+}
+
+// Helper to print the list
+void printList(Node* head) {
+    while (head) {
+        std::cout << head->data << " -> ";
+        head = head->next;
+    }
+    std::cout << "NULL" << std::endl;
+}

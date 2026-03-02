@@ -1,0 +1,37 @@
+#include <iostream>
+
+struct Node {
+    int data;
+    Node* next;
+    Node(int val) : data(val), next(nullptr) {}
+};
+
+double findAverage(Node* head) {
+    if (head == nullptr) return 0.0;
+    
+    // 1. Get the First element
+    int first = head->data;
+
+    // 2. Find Middle and Last elements
+    Node *slow = head, *fast = head;
+    Node *last = head;
+
+    // Move fast pointer to the end to find middle
+    while (fast != nullptr && fast->next != nullptr) {
+        slow = slow->next;       // slow will end at the middle
+        fast = fast->next->next; // fast moves twice as fast
+    }
+
+    // 3. Find the Last element
+    // We need to traverse from where fast is to the very last node
+    last = head;
+    while (last->next != nullptr) {
+        last = last->next;
+    }
+
+    int middle = slow->data;
+    int lastVal = last->data;
+
+    // Calculate Average
+    return (double)(first + middle + lastVal) / 3.0;
+}

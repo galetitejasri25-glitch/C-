@@ -1,0 +1,149 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+// Base Class
+class Account {
+protected:
+    int accountNumber;
+    string customerName;
+    string contactInfo;
+    double balance;
+
+public:
+    // Constructor
+    Account(int accNo, string name, string contact, double bal) {
+        accountNumber = accNo;
+        customerName = name;
+        contactInfo = contact;
+        balance = bal;
+    }
+
+    int getAccountNumber() {
+        return accountNumber;
+    }
+
+    void deposit(double amount) {
+        balance += amount;
+        cout << "Amount Deposited Successfully!\n";
+    }
+
+    void withdraw(double amount) {
+        if (amount <= balance) {
+            balance -= amount;
+            cout << "Withdrawal Successful!\n";
+        } else {
+            cout << "Insufficient Balance!\n";
+        }
+    }
+
+    void checkBalance() {
+        cout << "Current Balance: " << balance << endl;
+    }
+
+    void updateDetails(string name, string contact) {
+        customerName = name;
+        contactInfo = contact;
+        cout << "Details Updated Successfully!\n";
+    }
+
+    void displayDetails() {
+        cout << "Account Number: " << accountNumber << endl;
+        cout << "Customer Name: " << customerName << endl;
+        cout << "Contact Info: " << contactInfo << endl;
+        cout << "Balance: " << balance << endl;
+    }
+};
+
+// Derived Class (Inheritance Example)
+class SavingsAccount : public Account {
+public:
+    SavingsAccount(int accNo, string name, string contact, double bal)
+        : Account(accNo, name, contact, bal) {}
+};
+
+int main() {
+    vector<SavingsAccount> accounts;
+    int choice;
+
+    do {
+        cout << "\n===== Banking Management System =====\n";
+        cout << "1. Create Account\n";
+        cout << "2. Deposit\n";
+        cout << "3. Withdraw\n";
+        cout << "4. Check Balance\n";
+        cout << "5. Update Details\n";
+        cout << "6. Display Account Details\n";
+        cout << "7. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        if (choice == 1) {
+            int accNo;
+            string name, contact;
+            double bal;
+
+            cout << "Enter Account Number: ";
+            cin >> accNo;
+            cout << "Enter Customer Name: ";
+            cin >> name;
+            cout << "Enter Contact Info: ";
+            cin >> contact;
+            cout << "Enter Initial Balance: ";
+            cin >> bal;
+
+            SavingsAccount acc(accNo, name, contact, bal);
+            accounts.push_back(acc);
+            cout << "Account Created Successfully!\n";
+        }
+
+        else if (choice >= 2 && choice <= 6) {
+            int accNo;
+            cout << "Enter Account Number: ";
+            cin >> accNo;
+
+            bool found = false;
+
+            for (auto &acc : accounts) {
+                if (acc.getAccountNumber() == accNo) {
+                    found = true;
+
+                    if (choice == 2) {
+                        double amount;
+                        cout << "Enter Deposit Amount: ";
+                        cin >> amount;
+                        acc.deposit(amount);
+                    }
+                    else if (choice == 3) {
+                        double amount;
+                        cout << "Enter Withdrawal Amount: ";
+                        cin >> amount;
+                        acc.withdraw(amount);
+                    }
+                    else if (choice == 4) {
+                        acc.checkBalance();
+                    }
+                    else if (choice == 5) {
+                        string name, contact;
+                        cout << "Enter New Name: ";
+                        cin >> name;
+                        cout << "Enter New Contact: ";
+                        cin >> contact;
+                        acc.updateDetails(name, contact);
+                    }
+                    else if (choice == 6) {
+                        acc.displayDetails();
+                    }
+                }
+            }
+
+            if (!found) {
+                cout << "Account Not Found!\n";
+            }
+        }
+
+    } while (choice != 7);
+
+    cout << "Thank You!\n";
+    return 0;
+}

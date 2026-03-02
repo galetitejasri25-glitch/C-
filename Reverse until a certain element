@@ -1,0 +1,48 @@
+#include <iostream>
+
+struct Node {
+    int data;
+    Node* next;
+    Node(int val) : data(val), next(nullptr) {}
+};
+
+Node* reverseUntil(Node* head, int target) {
+    if (head == nullptr) return nullptr;
+
+    Node* prev = nullptr;
+    Node* curr = head;
+    Node* nextNode = nullptr;
+    Node* originalHead = head; // Keep track to connect the tail later
+
+    bool found = false;
+
+    while (curr != nullptr) {
+        nextNode = curr->next;
+        curr->next = prev;
+        prev = curr;
+        
+        // If we found the target, stop reversing
+        if (curr->data == target) {
+            found = true;
+            break;
+        }
+        curr = nextNode;
+    }
+
+    // Connect the original head (which is now the end of the reversed part)
+    // to the remainder of the list (nextNode)
+    if (originalHead != nullptr) {
+        originalHead->next = nextNode;
+    }
+
+    // 'prev' is the new head of the reversed segment
+    return found ? prev : head; 
+}
+
+void printList(Node* head) {
+    while (head) {
+        std::cout << head->data << " -> ";
+        head = head->next;
+    }
+    std::cout << "NULL" << std::endl;
+}

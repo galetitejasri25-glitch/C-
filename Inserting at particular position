@@ -1,0 +1,65 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+};
+
+// Function to insert at a specific position (1-based index)
+void insertAtPosition(Node** head, int data, int position) {
+    Node* newNode = new Node();
+    newNode->data = data;
+
+    // Case 1: Inserting at the very beginning (Position 1)
+    if (position == 1) {
+        newNode->next = *head;
+        *head = newNode;
+        return;
+    }
+
+    Node* temp = *head;
+    // Move to the node just BEFORE the target position
+    for (int i = 1; i < position - 1 && temp != NULL; i++) {
+        temp = temp->next;
+    }
+
+    // Check if position is valid (not beyond the list end)
+    if (temp == NULL) {
+        cout << "Position out of range!" << endl;
+        delete newNode;
+    } else {
+        // The "Handshake": Connect new node to the rest, then connect prev to new
+        newNode->next = temp->next;
+        temp->next = newNode;
+        cout << "Inserted " << data << " at position " << position << endl;
+    }
+}
+
+void display(Node* node) {
+    while (node != NULL) {
+        cout << node->data << " -> ";
+        node = node->next;
+    }
+    cout << "NULL" << endl;
+}
+
+int main() {
+    Node* head = NULL;
+    
+    // Starting with a small list: 10 -> 20 -> 40
+    insertAtPosition(&head, 10, 1);
+    insertAtPosition(&head, 20, 2);
+    insertAtPosition(&head, 40, 3);
+    
+    cout << "Original List: ";
+    display(head);
+
+    // Inserting 30 at position 3 (between 20 and 40)
+    insertAtPosition(&head, 30, 3);
+
+    cout << "Updated List:  ";
+    display(head);
+
+    return 0;
+}

@@ -1,0 +1,42 @@
+#include <iostream>
+
+struct Node {
+    int data;
+    Node* next;
+    Node(int val) : data(val), next(nullptr) {}
+};
+
+Node* reverseWithForLoop(Node* head) {
+    if (head == nullptr) return nullptr;
+
+    Node* prev = nullptr;
+    Node* nextNode = nullptr;
+
+    // We use the 'curr' pointer as our loop variable
+    for (Node* curr = head; curr != nullptr; ) {
+        // 1. Store the next node
+        nextNode = curr->next;
+        
+        // 2. Reverse the current node's pointer
+        curr->next = prev;
+        
+        // 3. Move pointers forward
+        prev = curr;
+        curr = nextNode;
+        
+        // Note: The 'increment' part of the for loop is empty 
+        // because we update 'curr' manually inside the body.
+    }
+
+    // 'prev' is the new head of the reversed list
+    return prev;
+}
+
+// Helper to print the list
+void printList(Node* head) {
+    while (head) {
+        std::cout << head->data << " -> ";
+        head = head->next;
+    }
+    std::cout << "NULL" << std::endl;
+}

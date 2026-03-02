@@ -1,0 +1,51 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Car {
+private:
+    // Private data members (Encapsulation)
+    int speed;
+    string brand;
+
+public:
+    // Constructor to initialize values
+    Car(string b, int s) {
+        brand = b;
+        speed = s;
+    }
+
+    // Public function to modify speed
+    void setSpeed(int s) {
+        if (s >= 0) { // Simple validation logic
+            speed = s;
+        } else {
+            cout << "Invalid speed value!" << endl;
+        }
+    }
+
+    // Public function to display car details
+    void displayInfo() {
+        cout << "--- Car Details ---" << endl;
+        cout << "Brand: " << brand << endl;
+        cout << "Current Speed: " << speed << " km/h" << endl;
+        cout << "-------------------" << endl;
+    }
+};
+
+int main() {
+    // Creating a Car object
+    Car myCar("Toyota", 60);
+
+    // Initial display
+    myCar.displayInfo();
+
+    // Modifying speed using the public member function
+    cout << "Updating speed to 100..." << endl;
+    myCar.setSpeed(100);
+
+    // Displaying updated info
+    myCar.displayInfo();
+
+    return 0;
+}

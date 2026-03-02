@@ -1,0 +1,48 @@
+#include <iostream>
+using namespace std;
+
+class Calculator {
+private:
+    double num1, num2;
+
+public:
+    // Member function to set values
+    void setValues(double a, double b) {
+        num1 = a;
+        num2 = b;
+    }
+
+    // Member functions for operations
+    double add() { return num1 + num2; }
+    
+    double subtract() { return num1 - num2; }
+    
+    double multiply() { return num1 * num2; }
+    
+    void divide() {
+        if (num2 != 0) {
+            cout << "Division: " << num1 / num2 << endl;
+        } else {
+            cout << "Division: Error! Division by zero." << endl;
+        }
+    }
+};
+
+int main() {
+    Calculator calc;
+    double val1, val2;
+
+    cout << "Enter two numbers: ";
+    cin >> val1 >> val2;
+
+    // Setting values in the object
+    calc.setValues(val1, val2);
+
+    // Demonstrating results
+    cout << "Addition: " << calc.add() << endl;
+    cout << "Subtraction: " << calc.subtract() << endl;
+    cout << "Multiplication: " << calc.multiply() << endl;
+    calc.divide();
+
+    return 0;
+}

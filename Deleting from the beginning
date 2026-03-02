@@ -1,0 +1,59 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+};
+
+// Helper function to add nodes for testing
+void insert(Node** head, int val) {
+    Node* newNode = new Node();
+    newNode->data = val;
+    newNode->next = *head;
+    *head = newNode;
+}
+
+// Q1: Function to delete from beginning and display
+void deleteFromBeginning(Node** head) {
+    if (*head == NULL) {
+        cout << "List is already empty!" << endl;
+        return;
+    }
+
+    Node* temp = *head;       // Step 1: Point temp to the current head
+    cout << "Deleting element: " << temp->data << endl;
+
+    *head = (*head)->next;    // Step 2: Move head to the next node
+    delete temp;              // Step 3: Free the memory of the old head
+}
+
+void display(Node* head) {
+    if (head == NULL) { cout << "List: Empty" << endl; return; }
+    while (head != NULL) {
+        cout << head->data << " -> ";
+        head = head->next;
+    }
+    cout << "NULL" << endl;
+}
+
+int main() {
+    Node* head = NULL;
+    insert(&head, 30);
+    insert(&head, 20);
+    insert(&head, 10);
+
+    cout << "Initial ";
+    display(head);
+
+    // Deleting one by one
+    deleteFromBeginning(&head);
+    cout << "After deletion: ";
+    display(head);
+
+    deleteFromBeginning(&head);
+    cout << "After deletion: ";
+    display(head);
+
+    return 0;
+}

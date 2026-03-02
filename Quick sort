@@ -1,0 +1,41 @@
+#include <iostream>
+#include <cstdlib> // For rand() and srand()
+#include <ctime>   // For time()
+using namespace std;
+
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];
+    int i = (low - 1);
+    for (int j = low; j < high; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            swap(arr[i], arr[j]);
+        }
+    }
+    swap(arr[i + 1], arr[high]);
+    return (i + 1);
+}
+
+int partition_random(int arr[], int low, int high) {
+    srand(time(0));
+    int random = low + rand() % (high - low);
+    swap(arr[random], arr[high]); // Swap random pivot to the end
+    return partition(arr, low, high);
+}
+
+void quickSort(int arr[], int low, int high) {
+    if (low < high) {
+        int pi = partition_random(arr, low, high);
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+
+int main() {
+    int arr[] = {10, 80, 30, 90, 40, 50, 70};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    quickSort(arr, 0, n - 1);
+    cout << "Sorted array (Random Pivot): ";
+    for (int i = 0; i < n; i++) cout << arr[i] << " ";
+    return 0;
+}

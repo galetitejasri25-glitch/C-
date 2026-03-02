@@ -1,0 +1,29 @@
+Function to insert at the end
+void insertAtEnd(Node** head, int newData) {
+    Node* newNode = new Node();
+    newNode->data = newData;
+    newNode->next = NULL;
+
+    if (*head == NULL) {
+        *head = newNode;
+        return;
+    }
+
+    Node* last = *head;
+    while (last->next != NULL) {
+        last = last->next; // Traverse to the last node
+    }
+    last->next = newNode;
+}
+
+// Function to display the list (for verification)
+void displayList(Node* node) {
+    while (node != NULL) {
+        cout << node->data << " -> ";
+        node = node->next;
+    }
+    cout << "NULL" << endl;
+}
+
+int main() {
+    Node* head = NULL;

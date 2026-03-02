@@ -1,0 +1,78 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+};
+
+// Function to delete node at a given position (1-based index)
+void deleteAtPosition(Node** head, int position) {
+    if (*head == NULL) {
+        cout << "List is empty!" << endl;
+        return;
+    }
+
+    Node* temp = *head;
+
+    // Case 1: If head needs to be removed
+    if (position == 1) {
+        *head = temp->next;   // Change head
+        delete temp;          // Free old head
+        return;
+    }
+
+    // Case 2: Find previous node of the node to be deleted
+    for (int i = 1; temp != NULL && i < position - 1; i++) {
+        temp = temp->next;
+    }
+
+    // If position is more than number of nodes
+    if (temp == NULL || temp->next == NULL) {
+        cout << "Position is out of range!" << endl;
+        return;
+    }
+
+    // Node temp->next is the node to be deleted
+    // Store pointer to the next of node to be deleted
+    Node* nextNode = temp->next->next;
+
+    // Unlink the node from linked list
+    delete temp->next;  // Free memory
+    temp->next = nextNode; // Reconnect the bridge
+}
+
+// Helper to build a list: 10 -> 20 -> 30 -> 40
+void insert(Node** head, int val) {
+    Node* newNode = new Node();
+    newNode->data = val;
+    newNode->next = *head;
+    *head = newNode;
+}
+
+void display(Node* node) {
+    while (node != NULL) {
+        cout << node->data << " -> ";
+        node = node->next;
+    }
+    cout << "NULL" << endl;
+}
+
+int main() {
+    Node* head = NULL;
+    insert(&head, 40);
+    insert(&head, 30);
+    insert(&head, 20);
+    insert(&head, 10);
+
+    cout << "Original List: ";
+    display(head);
+
+    // Deleting position 3 (the value 30)
+    deleteAtPosition(&head, 3);
+    
+    cout << "After deleting position 3: ";
+    display(head);
+
+    return 0;
+}

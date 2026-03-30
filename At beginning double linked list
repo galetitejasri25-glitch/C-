@@ -1,0 +1,33 @@
+#include <iostream>
+using namespace std;
+
+// Node structure as defined in your document
+struct Node {
+    int data;
+    Node* prev;
+    Node* next;
+
+    Node(int value) {
+        data = value;
+        prev = nullptr;
+        next = nullptr;
+    }
+};
+
+class DoublyLinkedList {
+public:
+    Node* head;
+
+    DoublyLinkedList() {
+        head = nullptr;
+    }
+
+    // 1. Insertion at the beginning
+    void insertAtBeginning(int value) {
+        Node* newNode = new Node(value);
+        if (head != nullptr) {
+            newNode->next = head;
+            head->prev = newNode;
+        }
+        head = newNode;
+    }

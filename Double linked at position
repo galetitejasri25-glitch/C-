@@ -1,0 +1,49 @@
+#include <iostream>
+using namespace std;
+
+// Node structure as defined in your document
+struct Node {
+    int data;
+    Node* prev;
+    Node* next;
+
+    Node(int value) {
+        data = value;
+        prev = nullptr;
+        next = nullptr;
+    }
+};
+
+class DoublyLinkedList {
+public:
+    Node* head;
+
+    DoublyLinkedList() {
+        head = nullptr;
+    }
+void insertAtPosition(int value, int position) {
+        if (position <= 1) {
+            insertAtBeginning(value);
+            return;
+        }
+
+        Node* newNode = new Node(value);
+        Node* temp = head;
+
+        for (int i = 1; temp != nullptr && i < position - 1; i++) {
+            temp = temp->next;
+        }
+
+        // Check if position is valid or out of bounds
+        if (temp == nullptr) {
+            cout << "Position exceeds list length. Inserting at the end.\n";
+            insertAtEnd(value);
+        } else {
+            newNode->next = temp->next;
+            newNode->prev = temp;
+            if (temp->next != nullptr) {
+                temp->next->prev = newNode;
+            }
+            temp->next = newNode;
+        }
+    }
